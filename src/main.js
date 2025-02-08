@@ -115,10 +115,10 @@ window.addEventListener('touchmove', (event) => {
 function animate() {
     requestAnimationFrame(animate);
 
-    // if(hari){
-    //     // hari.rotation.y += 0.02;
-    //     // hari.rotation.x += 0.01;
-    // }
+    if(hari){
+         hari.rotation.y -= 0.01;
+    //   hari.rotation.x += 0.01;
+    }
     
 
     renderer.render(scene, camera);
