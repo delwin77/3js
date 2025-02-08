@@ -39,34 +39,77 @@ const topLight = new THREE.DirectionalLight(0xffffff, 0.5);
 topLight.position.set(500, 500, 500);
 scene.add(topLight);
 
+// let allowRotation = false;
+// const modelName = document.getElementById('modelName');
+
+// window.addEventListener('wheel', (e) => {
+//     if (!allowRotation) {
+//         modelName.classList.add('hidden');
+//         allowRotation = true;
+//     }
+
+//     if(scrollY < 15){
+//         modelName.classList.remove('hidden');
+//     }else{
+//         modelName.classList.add('hidden');
+//     }
+// });
+
+
+// let scrollY = 0;
+// const rotationRadius = 5;
+
+// window.addEventListener('wheel', (event) => {
+//     scrollY += event.deltaY * 0.01;
+//     scrollY = Math.max(0, scrollY);
+
+//     const angle = scrollY * 0.1;
+//     camera.position.x = Math.sin(angle) * rotationRadius;
+//     camera.position.z = Math.cos(angle) * rotationRadius;
+//     camera.lookAt(scene.position);
+// });
+
 let allowRotation = false;
 const modelName = document.getElementById('modelName');
 
-window.addEventListener('wheel', (e) => {
+let scrollY = 0;
+const rotationRadius = 5;
+
+const handleScroll = (deltaY) => {
     if (!allowRotation) {
         modelName.classList.add('hidden');
         allowRotation = true;
     }
 
-    if(scrollY < 15){
-        modelName.classList.remove('hidden');
-    }else{
-        modelName.classList.add('hidden');
-    }
-});
-
-
-let scrollY = 0;
-const rotationRadius = 5;
-
-window.addEventListener('wheel', (event) => {
-    scrollY += event.deltaY * 0.01;
+    scrollY += deltaY * 0.01;
     scrollY = Math.max(0, scrollY);
 
     const angle = scrollY * 0.1;
     camera.position.x = Math.sin(angle) * rotationRadius;
     camera.position.z = Math.cos(angle) * rotationRadius;
     camera.lookAt(scene.position);
+
+    if (scrollY < 15) {
+        modelName.classList.remove('hidden');
+    } else {
+        modelName.classList.add('hidden');
+    }
+};
+
+window.addEventListener('wheel', (event) => {
+    handleScroll(event.deltaY);
+});
+
+let touchStartY = 0;
+window.addEventListener('touchstart', (event) => {
+    touchStartY = event.touches[0].clientY;
+});
+
+window.addEventListener('touchmove', (event) => {
+    const touchY = event.touches[0].clientY;
+    const deltaY = touchStartY - touchY;
+    touchStartY = touchY;
+    handleScroll(deltaY);
 });
 
 function animate() {

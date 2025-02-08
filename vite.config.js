@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/3js', // Use relative paths for deployment
+  base: '/', // Use relative paths for deployment
   build: {
     outDir: 'dist', // Output directory for the production build
     assetsInlineLimit: 4096, // Inline assets smaller than 4KB
